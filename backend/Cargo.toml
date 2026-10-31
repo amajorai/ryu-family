@@ -1,0 +1,46 @@
+[package]
+name = "ryu-family"
+version = "0.1.0"
+edition = "2021"
+license = "Apache-2.0"
+description = "Family hub sidecar for Ryu: important dates with reminders, shared lists and chores, preferences, wishlists, and gift ideas kept from the person they are for."
+repository = "https://github.com/amajorai/ryu"
+
+[[bin]]
+name = "ryu-family"
+path = "src/main.rs"
+
+[lib]
+name = "ryu_family"
+path = "src/lib.rs"
+
+# Versions match the sibling apps-store backends so joining the root workspace via
+# the `apps-store/*/backend` glob resolves no new package into Cargo.lock.
+[dependencies]
+ryu-sidecar-runtime = { path = "../crates/core/sidecar-runtime", version = "0.5.0", features = ["handoff"] }
+anyhow = "1"
+axum = "0.7"
+chrono = "0.4"
+# Reminders fire on the family's local calendar day, which needs real IANA zones
+# (DST included), not a fixed offset. Same 0.10 line apps/core and tuition pin.
+chrono-tz = "0.10"
+dirs = "5"
+# Only for the `notify.deliver` kernel callback (see `host.rs`).
+reqwest = { version = "0.12", default-features = false, features = ["rustls-tls", "json"] }
+rusqlite = { version = "0.40.0", features = ["bundled", "functions"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+thiserror = "2"
+tokio = { version = "1", features = ["full"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+uuid = { version = "1", features = ["v4", "serde"] }
+# Phase-2 content sealing (encb:v1 / RYU-CB01 / blind indexes). No OS keychain
+# backend: the key arrives from Core (RYU_SEAL_KEY) or RYU_MASTER_KEY.
+ryu-crypto = { path = "../crates/core/crypto", version = "0.5.0", default-features = false, features = ["sqlite-functions"] }
+# Encoding and randomness for sidecar_link.rs / store.rs.
+base64 = "0.22"
+rand = "0.8"
+
+[dev-dependencies]
+tower = { version = "0.5", features = ["util"] }
