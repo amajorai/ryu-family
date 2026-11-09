@@ -1,0 +1,32 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.family",
+  "version": "0.1.0",
+  "description": "A shared family hub for Ryu: important dates with reminders, shared lists and chores, wishlists, and gift ideas that stay hidden from the person they are for. The node your family uses keeps the records; nothing is bought on your behalf.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://github.com/amajorai/ryu-family",
+  "repository": "https://github.com/amajorai/ryu-family",
+  "keywords": [
+    "family",
+    "birthdays",
+    "reminders",
+    "grocery list",
+    "chores",
+    "wishlist",
+    "gift ideas"
+  ],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/family",
+      "displayName": "Family",
+      "mcp": {
+        "family": {
+          "description": "Family hub tools for upcoming dates, people, shared lists and chores, family-visible preferences and wishlists, and gift context. Gift ideas and wishlist claims are never exposed through these tools."
+        }
+      }
+    }
+  }
+}
